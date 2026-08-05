@@ -1,0 +1,114 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e9eadf;
+  background: #050605;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: #050605; }
+canvas { display: block; width: 100%; height: 100%; }
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  color: rgba(238, 239, 222, 0.9);
+  text-shadow: 0 1px 6px #000;
+}
+
+#title {
+  position: absolute;
+  top: 22px;
+  left: 25px;
+  letter-spacing: 0.42em;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#status {
+  position: absolute;
+  left: 25px;
+  bottom: 24px;
+  max-width: 340px;
+  font-size: 12px;
+  line-height: 1.55;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+}
+
+#fear {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 180px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+}
+#fear > span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: rgba(228, 234, 210, 0.9);
+  transition: width 120ms linear;
+}
+
+#crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+}
+
+#veil {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, transparent 0 15%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.92) 100%),
+    #11130d;
+  transition: opacity 600ms ease;
+}
+#veil.hidden { opacity: 0; pointer-events: none; }
+
+.panel {
+  width: min(580px, calc(100vw - 40px));
+  padding: 34px;
+  border: 1px solid rgba(235, 238, 214, 0.16);
+  background: rgba(7, 8, 6, 0.82);
+  backdrop-filter: blur(12px);
+}
+.panel h1 { margin: 0 0 12px; letter-spacing: 0.3em; font-size: clamp(28px, 6vw, 58px); }
+.panel p { opacity: 0.68; line-height: 1.6; }
+.panel button {
+  pointer-events: auto;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border: 1px solid rgba(235,238,214,.3);
+  background: transparent;
+  color: inherit;
+  letter-spacing: .18em;
+  cursor: pointer;
+}
+.panel button:hover { background: rgba(235,238,214,.08); }
+
+#warning {
+  position: absolute;
+  top: 17%;
+  width: 100%;
+  text-align: center;
+  letter-spacing: .4em;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+#warning.visible { opacity: .9; }
