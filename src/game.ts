@@ -211,14 +211,22 @@ function updateFog(dt: number) {
 
 function updatePlayer(dt: number) {
   if (!player.active) return;
-  const forward = new THREE.Vector3(Math.sin(player.yaw), 0, -Math.cos(player.yaw));
-  const right = new THREE.Vector3(Math.cos(player.yaw), 0, Math.sin(player.yaw));
+
+  // Camera-relative planar basis. Looking direction controls movement direction;
+  // the maze's world X/Z axes no longer define joystick forward/left/right.
+  const forward = new THREE.Vector3();
+  camera.getWorldDirection(forward);
+  forward.y = 0;
+  forward.normalize();
+  const right = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
+
   const wish = new THREE.Vector3();
   if (keys.has('KeyW')) wish.add(forward);
   if (keys.has('KeyS')) wish.sub(forward);
   if (keys.has('KeyD')) wish.add(right);
   if (keys.has('KeyA')) wish.sub(right);
   wish.addScaledVector(right, touchMove.x).addScaledVector(forward, -touchMove.y);
+
   const running = keys.has('ShiftLeft') || touchRunning;
   if (wish.lengthSq() > 0) wish.normalize().multiplyScalar(running ? 5.8 : 3.25);
   player.velocity.lerp(wish, 1 - Math.exp(-dt * 11));
